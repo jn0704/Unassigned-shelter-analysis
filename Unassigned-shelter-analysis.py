@@ -108,12 +108,12 @@ In this module, we save the results of above cell
 """
 ## Save the dictionaris as json files
 json_dict_coorToNum = json.dumps(dict_coorToNum)
-f = open('location', 'w')
+f = open('', 'w')
 f.write(json_dict_coorToNum)
 f.close()
 
 json_dict_numToCoor = json.dumps(dict_numToCoor)
-f = open('location', 'w')
+f = open('', 'w')
 f.write(json_dict_numToCoor)
 f.close()
 
@@ -121,7 +121,7 @@ road_df.to_json('location')
 
 ## Save the graph into a json file
 js_graph = json.dumps(json_graph.node_link_data(G))
-f = open('location', 'w')
+f = open('', 'w')
 f.write(js_graph)
 f.close()
 
@@ -210,8 +210,8 @@ for pop in pop_point :
         if num % 500 == 0 :
             print(num)
 ## save the results
-shortest_df.to_json('location')
-shortest_df.to_csv('location')
+shortest_df.to_json('')
+shortest_df.to_csv('')
 
 """
 Next, we calculate distances between shelters.
@@ -243,15 +243,15 @@ for shelter1 in shel_point :
             print(num)
         
 ## save the results
-shelter_df.to_json('location')
-shelter_df.to_csv('location')
+shelter_df.to_json('.json')
+shelter_df.to_csv('csv')
 
 """
 Notice!
 If we have already the results of the first and second module, we just read the files
 """
-shortest_df = pd.read_json('location')
-shelter_df = pd.read_json('location')
+shortest_df = pd.read_json('.json')
+shelter_df = pd.read_json('.json')
 
 """
 The second module simulates for pedestrians to find shelters.
@@ -344,12 +344,12 @@ while True :
         break
  
 ## save the results
-shortest_df.to_json('location')
-shortest_df.to_csv('location')
+shortest_df.to_json('.json')
+shortest_df.to_csv('.csv')
 
 cd = shortest_df.loc[asd["ASSIGN"] > 0]
-cd.to_json(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\matrix\Advenced_shortest.json')
-cd.to_csv(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\matrix\Advenced_shortest.csv')
+cd.to_json('.json')
+cd.to_csv('.csv')
 
 """
 In this module, we create line features as evacuation routes from the dataframe.
@@ -373,12 +373,12 @@ In this module we create an empty shapefile to write line features
 """
 ## Create shapefile
 driver = ogr.GetDriverByName('ESRI Shapefile')
-data_source = driver.CreateDataSource(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\routes\shortest_path.shp')
+data_source = driver.CreateDataSource('.shp')
 create_lyr = data_source.CreateLayer('shortest_path', road_lyr.GetSpatialRef(), ogr.wkbMultiLineString)
 data_source.Destroy()
 ## Create shortest path as linestring
 ## read shapefile
-path_ds = ogr.Open(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\routes\shortest_path.shp', 1)
+path_ds = ogr.Open('.shp', 1)
 path_lyr = path_ds.GetLayer('shortest_path')
 path_defn = path_lyr.GetLayerDefn()
 print(path_lyr.GetGeomType() == ogr.wkbLineString)
@@ -497,13 +497,13 @@ shortest_df = pd.DataFrame(columns=['POP_ID', 'SHELTER_ID', 'POP_NODE', 'SHELTER
 
 ## Create shapefile
 driver = ogr.GetDriverByName('ESRI Shapefile')
-data_source = driver.CreateDataSource(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\routest\shortest_path.shp')
+data_source = driver.CreateDataSource('.shp')
 create_lyr = data_source.CreateLayer('shortest_path', road_lyr.GetSpatialRef(), ogr.wkbMultiLineString)
 data_source.Destroy()
 
 ## Create shortest path as linestring
 ## read shapefile
-path_ds = ogr.Open(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\routest\shortest_path.shp', 1)
+path_ds = ogr.Open('.shp', 1)
 path_lyr = path_ds.GetLayer('shortest_path')
 path_defn = path_lyr.GetLayerDefn()
 print(path_lyr.GetGeomType() == ogr.wkbLineString)
@@ -582,7 +582,7 @@ for pop in pop_point :
 ## close path
 path_ds.Destroy()
 ## save the results
-shortest_df.to_json(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\matrix\assigned_df.json')
-shortest_df.to_csv(r'F:\01. Jn\01. KAIA\01. Evacuation considering road hazard\the whole network\Advenced_shortest_path\matrix\assigned_df.csv')
+shortest_df.to_json('.json')
+shortest_df.to_csv('.json')
 
 print('finish')
